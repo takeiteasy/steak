@@ -2,9 +2,11 @@
 #
 # Consumed at compile time by buffalo (running inside cccc's comptime pass,
 # driven by vendor/buffalo/src/buf_comptime.c with -D BUF_SPEC="spec/steak.bflo").
-# spec/steak_tokens.h is the checked-in token header validated against the
-# %tokens list below (name and order); TOK_EOF = 0 and TOK_ERROR = 1 are
-# reserved by buf_rt.h.
+# spec/steak_tokens.h is GENERATED from the %tokens list below (same names,
+# same order) by the build's gen-tokens rule -- 'vendor/buffalo/bin/buffalo
+# tokens spec/steak.bflo'; edit this list, not the header. It is validated
+# against the spec at comptime; TOK_EOF = 0 and TOK_ERROR = 1 are reserved
+# by buf_rt.h.
 #
 # Slice scope: keywords, identifiers, decimal + hex int literals, float
 # literals, plain string literals, the full operator/punct set, `#` line

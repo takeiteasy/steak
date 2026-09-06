@@ -6,3 +6,6 @@ examples/*.out
 # local-only: pre-port Nim implementation and porting scoping notes
 old/
 STEAK-PORT-NOTES.md
+
+# token header: generated from spec/steak.bflo by the gen-tokens build rule
+spec/steak_tokens.h

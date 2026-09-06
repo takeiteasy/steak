@@ -41,6 +41,27 @@ int build_main(Builder *ctx) {
     // real #include and lands in cccc's --deps-file tracking on its own.
     AddInput(steak, "spec/steak.bflo");
 
+    // The token header is a generated artifact, not checked in: regenerated
+    // from the spec's %tokens list by buffalo's token-header generator
+    // (plain cc, no cccc -- vendor/buffalo/bin/buffalo builds its buf_tokgen
+    // binary on demand the first time). The comptime pass still validates it
+    // like any hand-written header; this rule just removes the
+    // hand-maintenance. Declared inputs drive the up-to-date skip, so a
+    // %tokens edit regenerates the header and a header change recompiles
+    // the binary.
+    BuildTarget *gen_tokens = RunCustom(
+        ctx, "gen-tokens",
+        "vendor/buffalo/bin/buffalo tokens spec/steak.bflo"
+        " -o spec/steak_tokens.h");
+    DeclareOutput(gen_tokens, "spec/steak_tokens.h");
+    AddInput(gen_tokens, "spec/steak.bflo");
+    AddInput(gen_tokens, "vendor/buffalo/src/buf_rx.c");
+    AddInput(gen_tokens, "vendor/buffalo/src/buf_tokgen.c");
+    AddInput(gen_tokens, "vendor/buffalo/tools/buf_tokgen_main.c");
+    AddInput(gen_tokens, "vendor/buffalo/include/buffalo/buf_rx.h");
+    AddInput(gen_tokens, "vendor/buffalo/include/buffalo/buf_tokgen.h");
+    DependsOn(steak, gen_tokens);
+
     // Golden smoke: re-run this cccc over the test suite (same comptime pass
     // and flags as the steak target above) instead of shelling out to diff.
     // RunCustom with no declared output means the smoke runs on every build.
