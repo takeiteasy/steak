@@ -14,7 +14,7 @@ build/bin/steak examples/hello.fn   # token dump
 
 ## Layout
 
-- `spec/steak.bflo` — token vocabulary (buffalo spec); `spec/steak_tokens.h` is the matching checked-in token header the comptime pass validates
+- `spec/steak.bflo` — token vocabulary (buffalo spec); `spec/steak_tokens.h` is generated from it by the `gen-tokens` build rule (`vendor/buffalo/bin/buffalo tokens`, gitignored artifact) and validated against the spec at comptime
 - `src/main.c` — driver: file → `buf_next()` → token dump (dump helpers live in `src/token_dump.h`)
 - `tests/t_smoke.c` — golden smoke: `[[cccc::test]]` functions lex every `examples/*.fn` in-process and require the token dump to match its `.expected` byte for byte (replaces the old shell-diff loop; runs under `cccc --testing=vm`)
 - `vendor/buffalo` — submodule; supplies the comptime pipeline (`src/buf_comptime.c`) and the lexer runtime (`runtime/buf_rt.c`)
