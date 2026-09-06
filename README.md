@@ -6,16 +6,18 @@ steak is a small dynamic language with JS-flavoured syntax — closures, prototy
 
 ```sh
 git submodule update --init   # vendor/buffalo
-make                          # bin/steak
-bin/steak examples/hello.fn   # token dump
-make smoke                    # golden-diff every examples/*.fn
+cccc --build build.c          # build/bin/steak + golden smoke
+build/bin/steak examples/hello.fn   # token dump
 ```
+
+`cccc` must be on `PATH` — it is the compiler, not just the build driver. Add `--build-cache` for incremental rebuilds (header dependencies are tracked automatically; only the `.bflo` read at comptime through `-D` needs a declared `AddInput`).
 
 ## Layout
 
 - `spec/steak.bflo` — token vocabulary (buffalo spec); `spec/steak_tokens.h` is the matching checked-in token header the comptime pass validates
 - `src/main.c` — driver: file → `buf_next()` → token dump
 - `vendor/buffalo` — submodule; supplies the comptime pipeline (`src/buf_comptime.c`) and the lexer runtime (`runtime/buf_rt.c`)
+- `build.c` — cccc build script: one `CcccExecutable` target (compiled by cccc itself via `--compile=native`, the only path that can run the comptime pass) plus the golden-smoke `check` target
 - `docs/` — language design and roadmap (the spec this implementation follows)
 
 Status: bootstrap — lexer slice only (keywords, identifiers, int/float/hex literals, plain strings, operators, comments, NEWLINE). Parser, ASI, and the rest of the pipeline are tracked in the ticket tracker.
