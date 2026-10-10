@@ -1,6 +1,6 @@
 /*
  * t_smoke.c -- golden smoke for the lexer slice, driven through cccc's built
- * in test framework ([[cccc::test]]; ticket #7's evaluation of --testing
+ * in test framework ([[cccc::test]]; the evaluation of --testing
  * against the comptime pass came out positive on both backends, so the
  * smoke runs in-process under `cccc --testing=vm` instead of shelling out to
  * diff: build.c's `check` target invokes it with the same -D/-I flags the

@@ -1,6 +1,6 @@
 # steak
 
-steak is a small dynamic language with JS-flavoured syntax — closures, prototype delegation, method-call sugar, a wrapping numeric tower, try/catch/finally — implemented in C to the spec in `docs/design.md`. Built with [cccc](https://git.sr.ht/~takeiteasy/cccc), whose comptime pass runs [buffalo](https://git.sr.ht/~takeiteasy/buffalo) to lower `spec/steak.bflo` into the DFA tables linked into the binary: no `.bflo → .c` step, no checked-in generated code.
+steak is a small dynamic language with JS-flavoured syntax — closures, prototype delegation, method-call sugar, a wrapping numeric tower, try/catch/finally — implemented in C to the spec in `docs/design.md`. Built with [cccc](https://github.com/takeiteasy/cccc), whose comptime pass runs [buffalo](https://github.com/takeiteasy/buffalo) to lower `spec/steak.bflo` into the DFA tables linked into the binary: no `.bflo → .c` step, no checked-in generated code.
 
 ## Quick start
 

@@ -13,7 +13,7 @@
 // That constraint is why steak previously needed a Makefile driving a
 // one-shot `cccc -c=native` line by hand.
 //
-// `check` is the golden smoke (ticket #7): cccc's built-in test runner picks
+// `check` is the golden smoke: cccc's built-in test runner picks
 // it up as a --testing=vm run of tests/t_smoke.c, which lexes every example
 // in-process and requires its token dump to match examples/*.expected
 // byte for byte. The comptime pass runs again inside that invocation (the
